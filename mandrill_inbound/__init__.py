@@ -100,6 +100,25 @@ class MandrillInbound(object):
         return True
 
     @property
+    def images(self):
+        """
+        All inline images for this email.
+        """
+        images = []
+        for name, image in self.msg.get('images', {}).items():
+            images.append(Attachment(image))
+        return images
+
+    @property
+    def has_images(self):
+        """
+        A boolean of the image type.
+        """
+        if not self.images:
+            return False
+        return True
+
+    @property
     def html_body(self):
         """
         The body of the email in html form.

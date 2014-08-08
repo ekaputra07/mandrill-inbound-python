@@ -17,6 +17,9 @@ class MandrillInboundTest(unittest.TestCase):
         if os.path.exists('./tests/equal.jpg'):
             os.remove('./tests/equal.jpg')
 
+        if os.path.exists('./tests/part1.02050906.01020904@example.com'):
+            os.remove('./tests/part1.02050906.01020904@example.com')
+
     def test_should_have_a_subject(self):
         assert 'Testing' == self.inbound.subject
 
@@ -73,6 +76,29 @@ class MandrillInboundTest(unittest.TestCase):
 
     def test_have_no_attachments(self):
         assert 0 == len(self.inbound_no_attachments.attachments)
+
+    def test_should_have_one_image(self):
+        assert 1 == len(self.inbound.images)
+
+    def test_should_have_images(self):
+        assert True == self.inbound.has_images
+
+    def test_image_should_have_content_type(self):
+        for a in self.inbound.images:
+            assert a.content_type is not None
+
+    def test_image_should_have_name(self):
+        for a in self.inbound.images:
+            assert a.name is not None
+
+    def test_image_should_download(self):
+        for a in self.inbound.images:
+            a.download('./tests/')
+
+        assert True == os.path.exists('./tests/part1.02050906.01020904@example.com')
+
+    def test_have_no_images(self):
+        assert 0 == len(self.inbound_no_attachments.images)
 
     def test_send_date(self):
         assert 2013 == self.inbound.send_date.year
