@@ -103,6 +103,9 @@ class MandrillInboundTest(unittest.TestCase):
     def test_send_date(self):
         assert 2013 == self.inbound.send_date.year
 
+    def test_mailbox_email(self):
+        assert 'testing+123testing@example.com' == self.inbound.mailbox
+
     def test_mailbox_hash(self):
         assert '123testing' == self.inbound.mailbox_hash
 

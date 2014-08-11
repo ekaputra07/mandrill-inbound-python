@@ -168,6 +168,10 @@ class MandrillInbound(object):
         return self.msg.get('spam_report').get('score')
 
     @property
+    def mailbox(self):
+        return self.msg.get('email')
+
+    @property
     def mailbox_hash(self):
         matches = re.search(r"\+(\S+)\@", self.msg.get('email'))
 
